@@ -195,8 +195,8 @@ Website: https://muhalli-estate.vercel.app
 
 Email: info@muhalli.com
 
-Phone: +234 800 MUHALLI
+Phone: +234 704 449 1274
 
-WhatsApp: Click to Chat
+WhatsApp: +234 704 449 1274
 
-Office: 15, Awolowo Road, Ikoyi, Lagos, Nigeria
+Office: No.2 BB Plaza, Limawa Road, 700102, Kano State, Nigeria
