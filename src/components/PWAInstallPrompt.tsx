@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 const PROMPT_KEY = 'muhalli_pwa_prompt_last_shown';
 const PROMPT_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const AUTO_DISMISS_MS = 10000; // 10 seconds auto-dismiss
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -45,6 +46,16 @@ export default function PWAInstallPrompt() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
+  // Auto-dismiss the banner after 10 seconds
+  useEffect(() => {
+    if (showBanner) {
+      const timer = setTimeout(() => {
+        handleDismiss();
+      }, AUTO_DISMISS_MS);
+      return () => clearTimeout(timer);
+    }
+  }, [showBanner]);
+
   // Hide banner if already installed
   useEffect(() => {
     const handler = () => setShowBanner(false);
@@ -73,95 +84,135 @@ export default function PWAInstallPrompt() {
   if (!showBanner || dismissed) return null;
 
   return (
-    <div
-      role="dialog"
-      aria-label="Install Muhalli app"
-      style={{
-        position: 'fixed',
-        bottom: '5.5rem',         // above floating WhatsApp button
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'min(92vw, 420px)',
-        background: 'linear-gradient(135deg, #1E1E26 0%, #16161E 100%)',
-        border: '1px solid rgba(196, 154, 26, 0.45)',
-        borderRadius: '12px',
-        padding: '1.1rem 1.25rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(196,154,26,0.12)',
-        zIndex: 9999,
-        animation: 'fadeInUp 0.4s ease forwards',
-      }}
-    >
-      {/* MH Icon */}
+    <>
       <div
-        style={{
-          width: '44px',
-          height: '44px',
-          borderRadius: '10px',
-          background: 'linear-gradient(135deg, #C49A1A, #9A760E)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-          fontFamily: 'var(--font-heading)',
-          fontWeight: 800,
-          fontSize: '1rem',
-          color: '#0F0F14',
-          letterSpacing: '-0.02em',
-        }}
+        role="dialog"
+        aria-label="Install Muhalli app"
+        className="pwa-prompt-container"
       >
-        MH
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: 0 }}>
+          {/* MH Icon */}
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '8px',
+              background: 'linear-gradient(135deg, #C49A1A, #9A760E)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 800,
+              fontSize: '0.9rem',
+              color: '#0F0F14',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            MH
+          </div>
+
+          {/* Text */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.82rem', color: 'var(--color-cream)', margin: 0 }}>
+              Add Muhalli to your phone
+            </p>
+            <p style={{ fontSize: '0.72rem', color: 'var(--color-muted)', margin: '0.1rem 0 0', lineHeight: 1.35 }}>
+              Browse properties &amp; contact us offline, anytime.
+            </p>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="pwa-prompt-actions">
+          <button
+            onClick={handleInstall}
+            className="pwa-install-btn"
+          >
+            Install App
+          </button>
+          <button
+            onClick={handleDismiss}
+            style={{
+              background: 'transparent',
+              color: 'var(--color-muted)',
+              border: 'none',
+              padding: '0.2rem',
+              fontSize: '0.7rem',
+              cursor: 'pointer',
+              textAlign: 'center',
+              textDecoration: 'underline',
+              textUnderlineOffset: '2px',
+            }}
+          >
+            Not now
+          </button>
+        </div>
       </div>
 
-      {/* Text */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-cream)', margin: 0 }}>
-          Add Muhalli to your phone
-        </p>
-        <p style={{ fontSize: '0.74rem', color: 'var(--color-muted)', margin: '0.15rem 0 0', lineHeight: 1.4 }}>
-          Browse properties &amp; contact us offline, anytime.
-        </p>
-      </div>
+      <style>{`
+        .pwa-prompt-container {
+          position: fixed;
+          bottom: 5.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          width: min(92vw, 440px);
+          background: linear-gradient(135deg, #1E1E26 0%, #16161E 100%);
+          border: 1px solid rgba(196, 154, 26, 0.45);
+          borderRadius: 12px;
+          padding: 1rem;
+          display: flex;
+          alignItems: center;
+          justifyContent: space-between;
+          gap: 1rem;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(196,154,26,0.15);
+          zIndex: 9999;
+          animation: fadeInUp 0.4s ease forwards;
+        }
 
-      {/* Actions */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexShrink: 0 }}>
-        <button
-          onClick={handleInstall}
-          style={{
-            background: 'var(--color-gold)',
-            color: '#0F0F14',
-            border: 'none',
-            borderRadius: '6px',
-            padding: '0.4rem 0.85rem',
-            fontFamily: 'var(--font-heading)',
-            fontWeight: 700,
-            fontSize: '0.75rem',
-            cursor: 'pointer',
-            whiteSpace: 'nowrap',
-            transition: 'opacity 0.2s ease',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-        >
-          Install App
-        </button>
-        <button
-          onClick={handleDismiss}
-          style={{
-            background: 'transparent',
-            color: 'var(--color-muted)',
-            border: 'none',
-            padding: '0.2rem',
-            fontSize: '0.7rem',
-            cursor: 'pointer',
-            textAlign: 'center',
-          }}
-        >
-          Not now
-        </button>
-      </div>
-    </div>
+        .pwa-prompt-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          flex-shrink: 0;
+        }
+
+        .pwa-install-btn {
+          background: var(--color-gold);
+          color: #0F0F14;
+          border: none;
+          borderRadius: 6px;
+          padding: 0.5rem 1rem;
+          fontFamily: var(--font-heading);
+          fontWeight: 700;
+          fontSize: '0.75rem';
+          cursor: pointer;
+          whiteSpace: nowrap;
+          transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .pwa-install-btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+          .pwa-prompt-container {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.85rem;
+            bottom: 5.2rem;
+            padding: 0.85rem;
+          }
+
+          .pwa-prompt-actions {
+            justify-content: flex-end;
+            width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 0.65rem;
+          }
+        }
+      `}</style>
+    </>
   );
 }
