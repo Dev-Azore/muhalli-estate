@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="36" height="36" rx="6" fill="#0F0F14" />
+  <defs>
+    <linearGradient id="goldGradFavicon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AE35" />
+      <stop offset="50%" stop-color="#C49A1A" />
+      <stop offset="100%" stop-color="#9A760E" />
+    </linearGradient>
+  </defs>
+  <!-- M left column -->
+  <rect x="4" y="7" width="3.5" height="22" rx="0.5" fill="url(#goldGradFavicon)" />
+  <!-- M right column -->
+  <rect x="11" y="7" width="3.5" height="22" rx="0.5" fill="url(#goldGradFavicon)" />
+  <!-- M diagonals -->
+  <polygon points="4,7 7.5,7 13,16 9.5,16" fill="url(#goldGradFavicon)" />
+  <polygon points="14.5,7 11,7 9,16 12.5,16" fill="url(#goldGradFavicon)" />
+  <!-- H left column -->
+  <rect x="18.5" y="7" width="3.5" height="22" rx="0.5" fill="url(#goldGradFavicon)" />
+  <!-- H right column -->
+  <rect x="28.5" y="7" width="3.5" height="22" rx="0.5" fill="url(#goldGradFavicon)" />
+  <!-- H crossbar -->
+  <rect x="18.5" y="16" width="13.5" height="3.5" rx="0.5" fill="url(#goldGradFavicon)" />
+</svg>

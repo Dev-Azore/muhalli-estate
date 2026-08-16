@@ -1,0 +1,513 @@
+@import "tailwindcss";
+/* Fonts are loaded via next/font/google in layout.tsx (Cormorant Garamond, Montserrat, Inter) */
+
+/* =============================================
+   MUHALLI ESTATE — DESIGN SYSTEM
+   Brand: Deep Graphite + Metallic Gold
+   ============================================= */
+
+:root {
+  /* --- Brand Colours (extracted from logo) --- */
+  --color-graphite:       #1A1A1F;   /* primary dark — logo background */
+  --color-graphite-deep:  #0F0F14;   /* near-black deepest sections */
+  --color-graphite-mid:   #252530;   /* mid-dark for cards/surfaces */
+  --color-graphite-light: #32323F;   /* lighter surface on dark bg */
+  --color-graphite-border:#3A3A4A;   /* borders on dark backgrounds */
+
+  --color-gold:           #C49A1A;   /* metallic gold — logo wordmark */
+  --color-gold-light:     #D4AE35;   /* hover/highlight */
+  --color-gold-lighter:   #E8C84A;   /* active/focus */
+  --color-gold-dark:      #9A760E;   /* pressed/shadow */
+  --color-gold-muted:     rgba(196, 154, 26, 0.15); /* subtle gold tint */
+
+  --color-cream:          #F5F3EF;   /* warm off-white */
+  --color-cream-dark:     #EAE6DE;   /* slightly darker cream */
+  --color-muted:          #8A8A9A;   /* subtext on dark bg */
+  --color-muted-light:    #B0B0C0;   /* lighter subtext */
+
+  --color-success:        #2D7A4F;   /* Available — green */
+  --color-warning:        #B87A1A;   /* Reserved — amber */
+  --color-danger:         #8A2020;   /* Sold — muted red */
+
+  /* --- Typography (vars injected by next/font in layout.tsx) --- */
+  --font-display:  var(--font-cormorant), Georgia, serif;
+  --font-heading:  var(--font-montserrat), system-ui, sans-serif;
+  --font-body:     var(--font-inter), system-ui, sans-serif;
+
+  /* --- Easing --- */
+  --ease-spring:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth:   cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Spacing scale --- */
+  --section-py: clamp(4rem, 8vw, 7rem);
+  --container-px: clamp(1rem, 5vw, 2rem);
+  --max-width: 1280px;
+
+  /* --- Transitions --- */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* --- Shadows --- */
+  --shadow-gold:    0 0 0 1px rgba(196, 154, 26, 0.3), 0 4px 24px rgba(196, 154, 26, 0.1);
+  --shadow-card:    0 2px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.5), 0 16px 48px rgba(0,0,0,0.4);
+
+  /* --- Tailwind v4 theme tokens --- */
+  --background: var(--color-graphite);
+  --foreground: var(--color-cream);
+}
+
+/* =============================================
+   TAILWIND V4 THEME EXTENSION
+   ============================================= */
+@theme inline {
+  --color-background:       var(--background);
+  --color-foreground:       var(--foreground);
+
+  --color-graphite:         var(--color-graphite);
+  --color-graphite-deep:    var(--color-graphite-deep);
+  --color-graphite-mid:     var(--color-graphite-mid);
+  --color-graphite-light:   var(--color-graphite-light);
+  --color-graphite-border:  var(--color-graphite-border);
+
+  --color-gold:             var(--color-gold);
+  --color-gold-light:       var(--color-gold-light);
+  --color-gold-lighter:     var(--color-gold-lighter);
+  --color-gold-dark:        var(--color-gold-dark);
+  --color-gold-muted:       var(--color-gold-muted);
+
+  --color-cream:            var(--color-cream);
+  --color-cream-dark:       var(--color-cream-dark);
+  --color-muted:            var(--color-muted);
+  --color-muted-light:      var(--color-muted-light);
+
+  --font-display:           var(--font-display);
+  --font-heading:           var(--font-heading);
+  --font-body:              var(--font-body);
+
+  --font-sans: var(--font-body);
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-graphite);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =============================================
+   TYPOGRAPHY UTILITIES
+   ============================================= */
+.font-display   { font-family: var(--font-display); }
+.font-heading   { font-family: var(--font-heading); }
+.font-body      { font-family: var(--font-body); }
+
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.text-gold { color: var(--color-gold); }
+.text-gold-light { color: var(--color-gold-light); }
+.text-cream { color: var(--color-cream); }
+.text-muted { color: var(--color-muted); }
+
+/* =============================================
+   NAIRA PRICE UTILITY
+   ============================================= */
+.naira-price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-gold);
+}
+.naira-price::before {
+  content: '₦';
+  font-size: 0.8em;
+  vertical-align: super;
+  margin-right: 1px;
+}
+
+/* =============================================
+   BLUEPRINT GRID PATTERN
+   (inspired by the MH monogram column motif)
+   ============================================= */
+.bg-blueprint {
+  background-color: var(--color-graphite-deep);
+  background-image:
+    linear-gradient(rgba(196, 154, 26, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 154, 26, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-blueprint-subtle {
+  background-image:
+    linear-gradient(rgba(196, 154, 26, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 154, 26, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* =============================================
+   GOLD GRADIENT TEXT
+   ============================================= */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 50%, var(--color-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   CONTAINER
+   ============================================= */
+.container-site {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-px);
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+  color: var(--color-graphite-deep);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-gold-lighter), var(--color-gold-light));
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+.btn-outline:hover {
+  background: var(--color-gold-muted);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-cream);
+  border: 1px solid var(--color-graphite-border);
+}
+.btn-ghost:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* =============================================
+   STATUS BADGE
+   ============================================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
+}
+.badge-available  { background: rgba(45, 122, 79, 0.2); color: #4CAF7A; border: 1px solid rgba(45, 122, 79, 0.4); }
+.badge-reserved   { background: rgba(184, 122, 26, 0.2); color: #D4A020; border: 1px solid rgba(184, 122, 26, 0.4); }
+.badge-sold       { background: rgba(138, 32, 32, 0.2);  color: #C06060; border: 1px solid rgba(138, 32, 32, 0.4); }
+.badge-offplan    { background: rgba(196, 154, 26, 0.15); color: var(--color-gold-light); border: 1px solid rgba(196, 154, 26, 0.3); }
+.badge-category   { background: var(--color-graphite-mid); color: var(--color-muted-light); border: 1px solid var(--color-graphite-border); }
+
+/* =============================================
+   CARD
+   ============================================= */
+.card {
+  background: var(--color-graphite-mid);
+  border: 1px solid var(--color-graphite-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+.card:hover {
+  border-color: rgba(196, 154, 26, 0.3);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   SECTION DIVIDER (gold line)
+   ============================================= */
+.divider-gold {
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+  margin-bottom: 1.5rem;
+}
+
+/* =============================================
+   ANIMATIONS
+   Respects prefers-reduced-motion for accessibility
+   ============================================= */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-48px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(48px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+  @keyframes shimmerGold {
+    0%   { background-position: -300% 0; }
+    100% { background-position:  300% 0; }
+  }
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196, 154, 26, 0.5); }
+    50%       { box-shadow: 0 0 0 10px rgba(196, 154, 26, 0); }
+  }
+  @keyframes rippleGold {
+    0%   { box-shadow: 0 0 0 0 rgba(196, 154, 26, 0.35); }
+    100% { box-shadow: 0 0 0 16px rgba(196, 154, 26, 0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+  }
+  @keyframes counterPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.18); color: var(--color-gold-lighter); }
+    100% { transform: scale(1); }
+  }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); transform-origin: left; }
+    to   { transform: scaleX(1); transform-origin: left; }
+  }
+  @keyframes heroFloatBadge {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50%       { transform: translateY(-5px) rotate(0deg); }
+  }
+
+  /* Core utility classes */
+  .animate-fade-in-up   { animation: fadeInUp 0.65s var(--ease-spring) both; }
+  .animate-fade-in-down { animation: fadeInDown 0.5s var(--ease-spring) both; }
+  .animate-fade-in      { animation: fadeIn 0.4s ease both; }
+  .animate-slide-left   { animation: slideInLeft 0.65s var(--ease-spring) both; }
+  .animate-slide-right  { animation: slideInRight 0.65s var(--ease-spring) both; }
+  .animate-scale-in     { animation: scaleIn 0.4s var(--ease-spring) both; }
+  .animate-float        { animation: floatY 4s ease-in-out infinite; }
+  .animate-shake        { animation: shake 0.4s ease; }
+
+  /* Stagger delay utilities */
+  .stagger-1 { animation-delay: 80ms; }
+  .stagger-2 { animation-delay: 160ms; }
+  .stagger-3 { animation-delay: 240ms; }
+  .stagger-4 { animation-delay: 320ms; }
+  .stagger-5 { animation-delay: 400ms; }
+
+  /* Gold shimmer sweep text */
+  .shimmer-gold-text {
+    background: linear-gradient(
+      90deg,
+      var(--color-gold-dark) 0%,
+      var(--color-gold-lighter) 40%,
+      var(--color-gold) 60%,
+      var(--color-gold-dark) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerGold 3.5s ease-in-out infinite;
+  }
+
+  /* Growing gold underline */
+  .gold-underline-anim::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    animation: lineGrow 0.8s var(--ease-spring) 0.4s both;
+  }
+}
+
+/* Safe fallbacks when motion is reduced */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in { opacity: 1; transform: none; }
+  .floating-cta { animation: none; }
+}
+
+/* =============================================
+   FORM ELEMENTS
+   ============================================= */
+.input-field {
+  width: 100%;
+  background: var(--color-graphite-light);
+  border: 1px solid var(--color-graphite-border);
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast);
+  outline: none;
+}
+.input-field::placeholder { color: var(--color-muted); }
+.input-field:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px rgba(196, 154, 26, 0.15);
+}
+
+.input-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-light);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* =============================================
+   SECTION HEADINGS PATTERN
+   ============================================= */
+.section-eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-cream);
+}
+
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-muted-light);
+  max-width: 52ch;
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+/* =============================================
+   SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-graphite-deep); }
+::-webkit-scrollbar-thumb { background: var(--color-graphite-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold-dark); }
+
+/* =============================================
+   FLOATING WHATSAPP / CALL BUTTON (Mobile)
+   ============================================= */
+.floating-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  animation: pulse-gold 2.5s infinite;
+  transition: transform var(--transition-fast);
+}
+.floating-cta:hover { transform: scale(1.05); }
+
+@media (min-width: 768px) {
+  .floating-cta { display: none; }
+}

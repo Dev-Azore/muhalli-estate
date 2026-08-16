@@ -1,0 +1,23 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="36" fill="#0F0F14" />
+  <defs>
+    <linearGradient id="goldGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AE35" />
+      <stop offset="50%" stop-color="#C49A1A" />
+      <stop offset="100%" stop-color="#9A760E" />
+    </linearGradient>
+  </defs>
+  <!-- M left column -->
+  <rect x="22" y="38" width="18" height="104" rx="2" fill="url(#goldGradApple)" />
+  <!-- M right column -->
+  <rect x="58" y="38" width="18" height="104" rx="2" fill="url(#goldGradApple)" />
+  <!-- M diagonals -->
+  <polygon points="22,38 40,38 68,88 50,88" fill="url(#goldGradApple)" />
+  <polygon points="76,38 58,38 48,88 66,88" fill="url(#goldGradApple)" />
+  <!-- H left column -->
+  <rect x="96" y="38" width="18" height="104" rx="2" fill="url(#goldGradApple)" />
+  <!-- H right column -->
+  <rect x="144" y="38" width="18" height="104" rx="2" fill="url(#goldGradApple)" />
+  <!-- H crossbar -->
+  <rect x="96" y="84" width="66" height="18" rx="2" fill="url(#goldGradApple)" />
+</svg>
